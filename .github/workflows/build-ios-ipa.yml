@@ -28,7 +28,7 @@ jobs:
           cd ios
           pod install
 
-      - name: Find Xcode workspace and scheme
+      - name: Find Food Valley Xcode scheme
         run: |
           WORKSPACE=$(find ios -maxdepth 1 -name "*.xcworkspace" -print -quit)
 
@@ -37,19 +37,38 @@ jobs:
             exit 1
           fi
 
-          SCHEME=$(xcodebuild \
-            -workspace "$WORKSPACE" \
-            -list \
-            -json | python3 -c 'import json,sys; print(json.load(sys.stdin)["workspace"]["schemes"][0])')
+          echo "Workspace found:"
+          echo "$WORKSPACE"
+
+          echo "Available non-Pods shared schemes:"
+          find ios \
+            -path "*/xcshareddata/xcschemes/*.xcscheme" \
+            -not -path "*/Pods/*" \
+            -print
+
+          SCHEME_FILE=$(find ios \
+            -path "*/xcshareddata/xcschemes/*.xcscheme" \
+            -not -path "*/Pods/*" \
+            -print \
+            -quit)
+
+          if [ -z "$SCHEME_FILE" ]; then
+            echo "No application scheme file found."
+            exit 1
+          fi
+
+          SCHEME=$(basename "$SCHEME_FILE" .xcscheme)
+
+          echo "Using application scheme:"
+          echo "$SCHEME"
 
           echo "WORKSPACE=$WORKSPACE" >> "$GITHUB_ENV"
           echo "SCHEME=$SCHEME" >> "$GITHUB_ENV"
 
-          echo "Workspace: $WORKSPACE"
-          echo "Scheme: $SCHEME"
-
-      - name: Build unsigned iOS app
+      - name: Build unsigned Food Valley app
         run: |
+          echo "Building scheme: $SCHEME"
+
           xcodebuild \
             -workspace "$WORKSPACE" \
             -scheme "$SCHEME" \
@@ -59,23 +78,32 @@ jobs:
             -derivedDataPath "$PWD/build" \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY=""
+            CODE_SIGN_IDENTITY="" \
+            clean build
 
-      - name: Create unsigned IPA
+      - name: Locate built application
         run: |
-          echo "Searching for built iOS app..."
+          echo "Build products:"
+          find "$PWD/build/Build/Products" -maxdepth 3 -print || true
 
-          find "$PWD/build" -type d -name "*.app" -print
-
-          APP_PATH=$(find "$PWD/build" -type d -name "*.app" -print -quit)
+          APP_PATH=$(find "$PWD/build/Build/Products" \
+            -type d \
+            -name "*.app" \
+            -print \
+            -quit)
 
           if [ -z "$APP_PATH" ]; then
-            echo "No .app file was found anywhere inside the build directory."
+            echo "No .app was generated."
             exit 1
           fi
 
-          echo "Found app at: $APP_PATH"
+          echo "Found application:"
+          echo "$APP_PATH"
 
+          echo "APP_PATH=$APP_PATH" >> "$GITHUB_ENV"
+
+      - name: Create unsigned IPA
+        run: |
           rm -rf Payload
           rm -f Food-Valley.ipa
 
@@ -84,7 +112,7 @@ jobs:
 
           /usr/bin/zip -qry Food-Valley.ipa Payload
 
-          echo "IPA created successfully:"
+          echo "IPA created:"
           ls -lh Food-Valley.ipa
 
       - name: Upload Food Valley IPA
