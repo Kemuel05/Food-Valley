@@ -182,6 +182,7 @@ The application has been tested on a physical iPhone and includes native functio
 
 
 <p align="center">
+  <img src="https://github.com/user-attachments/assets/5c20ff51-216c-4aae-ab51-4da36c9b64ae" width="190"/>
   <img src="https://github.com/user-attachments/assets/67e60a81-c232-4b4e-85b2-7b87c84ab94e" width="190" />
   <img src="https://github.com/user-attachments/assets/d1616dec-6116-47c3-8ed4-dfd13431a0de" width="190" />
   <img src="https://github.com/user-attachments/assets/d61b55a1-b7f9-4993-982a-b3787ed3d291" width="190" />
@@ -190,6 +191,8 @@ The application has been tested on a physical iPhone and includes native functio
 <p align="center">
   <img src="https://github.com/user-attachments/assets/edd66eac-9107-4e3c-9276-a160c8d1aa71" width="190" />
   <img src="https://github.com/user-attachments/assets/4a301d5a-782a-49d4-8831-06a307e4100d" width="190" />
+  <img src="https://github.com/user-attachments/assets/3283d0c9-a3d4-4100-90c1-2868a28c0ecc" width="190"/>
+
 </p>
 
 
