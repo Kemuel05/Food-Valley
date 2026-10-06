@@ -139,7 +139,7 @@ Make sure the following are installed:
 Clone the repository:
 
 ```bash
-git clone https://github.com/Kemuel05/Kitchen-Helper-Project.git
+git clone https://github.com/Kemuel05/Food-Valley.git
 ```
 
 Move into the project directory:
