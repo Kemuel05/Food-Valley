@@ -4,14 +4,11 @@ export const DAILY_NOTIFICATION_HOUR = 15;
 export const DAILY_NOTIFICATION_MINUTE = 0;
 
 export const NOTIFICATION_MESSAGES = [
-  "Remember Kemu loves you! And he also loves cookies!",
-  "Make cookies!",
-  "Remember to eat good food! Love You!",
-  "Hmm Pancakes? :)",
-  "Hmm Pasta? :)",
-  "Muah <3",
-  "Did you eat today? -_-",
-  "Psst...Love you",
+  "What's cooking today? 🍳",
+  "Your next favorite recipe might already be waiting! 🌱",
+  "Time to make something delicious! 🍓",
+  "A little cooking adventure sounds good right now 👩‍🍳",
+  "Don't forget about your saved recipes! 📖",
 ] as const;
 
 export function getRandomNotificationMessage(

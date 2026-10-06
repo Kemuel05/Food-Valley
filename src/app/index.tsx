@@ -27,8 +27,8 @@ export default function WelcomeScreen() {
 
   function handleEnterFoodValley(): void {
     Alert.alert(
-      "Welcome to Food Valley, Alejandra! ♡",
-      "A little cookbook made with love by Kemu.",
+      "Welcome to Food Valley!",
+      "Save your favorite recipes, keep track of what you've cooked, and build your own personal cookbook.",
       [
         {
           text: "Let's Cook!",
